@@ -4,13 +4,13 @@ import requests
 import os
 from dotenv import load_dotenv
 
-# .env file load karne ke liye
+# Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
-# 🔐 Groq API Key .env se load ho rahi hai
+# 🔐 Load Groq API Key from .env
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
@@ -25,28 +25,28 @@ def chat():
 
         print(f"📩 Request Received: {user_text}")
 
-        # --- YAHAN HAI MASTER PROMPT UPDATE ---
+        # --- UPDATED PROFESSIONAL ENGLISH PROMPT ---
         payload = {
             "model": "llama-3.3-70b-versatile",
             "messages": [
                 {
                     "role": "system",
                     "content": (
-                        "You are NyayaShield AI, a professional Legal & Consumer Complaint Assistant for Indians. "
-                        "Your job is to draft a FORMAL and FIRM complaint. "
-                        "STRICT RULES: "
-                        "1. Use 'Natural Hinglish' (mix of Hindi and English) as spoken in daily life. "
-                        "2. NO difficult Sanskritized Hindi (avoid words like 'anurodh', 'yatriyon', 'dhanyavaad'). "
-                        "3. Use common English words for official terms: 'Refund', 'Complaint', 'Order', 'Service', 'Action', 'Replacement', 'Support'. "
-                        "4. Tone must be SERIOUS and FIRM, not like a polite customer request. "
-                        "5. Structure: Clear Subject Line, Formal Salutation, Clear Facts, Demand for Action, and Closing. "
-                        "6. REMOVE all Legal Sections (BNS/IPC) and Disclaimers like 'I am an AI'. "
-                        "7. Format with placeholders like [Your Name], [Order ID], and [Date] where needed."
+                        "You are NyayaShield AI, a professional Legal & Consumer Complaint Assistant. "
+                        "Your primary objective is to draft HIGHLY FORMAL, SOPHISTICATED, and FIRM legal complaints. "
+                        "STRICT OPERATIONAL RULES: "
+                        "1. Use impeccable, professional English only. Avoid slang or informal language. "
+                        "2. The tone must be AUTHORITATIVE and SERIOUS. It should not sound like a polite request but a demand for justice/action. "
+                        "3. Use industry-standard terminology: 'Refund', 'Liability', 'Statutory Rights', 'Breach of Service', 'Non-compliance', 'Legal Recourse'. "
+                        "4. Structure the output clearly: Professional Subject Line, Formal Salutation, Chronological Statement of Facts, Explicit Demand for Resolution, and a Professional Closing. "
+                        "5. Do NOT include specific legal sections (BNS/IPC) unless explicitly asked. Focus on the factual and administrative grievance. "
+                        "6. REMOVE all AI disclaimers (e.g., 'As an AI...', 'I am not a lawyer'). "
+                        "7. Use placeholders like [Your Full Name], [Order/Reference ID], [Date], and [Company Name] for user customization."
                     )
                 },
                 {"role": "user", "content": user_text}
             ],
-            "temperature": 0.5 # Temperature thoda kam kiya hai taaki AI zyada creative na bane, seedhi baat kare
+            "temperature": 0.4 # Lowered slightly for more consistent professional output
         }
 
         headers = {
@@ -59,7 +59,7 @@ def chat():
         if response.status_code == 200:
             result = response.json()
             bot_reply = result['choices'][0]['message']['content']
-            print("✅ Natural Hinglish Mail Generated")
+            print("✅ Professional English Draft Generated")
             return jsonify({"reply": bot_reply})
         else:
             return jsonify({"error": f"Groq API error: {response.text}"}), response.status_code
@@ -69,5 +69,5 @@ def chat():
         return jsonify({"error": "Internal Server Error"}), 500
 
 if __name__ == "__main__":
-    # Debug=True helps in development
+    # Using Port 3000 for local dev; Render will override this with its own $PORT
     app.run(host="0.0.0.0", port=3000, debug=True)
