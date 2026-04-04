@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NyayaShield | AI Complaint Assistant</title>
+    <link rel="stylesheet" href="first.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Chat Window display logic */
+        #chat-window {
+            display: none;
+            flex-direction: column;
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .chat-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #fdfdfd;
+        }
+        .msg {
+            max-width: 85%;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .bot { align-self: flex-start; background: #f1f1f1; color: #333; }
+        .user { align-self: flex-end; background: #e63946; color: white; }
+        .chat-footer { padding: 10px; display: flex; border-top: 1px solid #ddd; }
+        .chat-footer input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; outline: none; }
+        .chat-header { background:#e63946; color:white; padding:15px; border-radius:15px 15px 0 0; display:flex; justify-content:space-between; align-items: center; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Nyaya<span>Shield</span></div>
+        </nav>
+
+    <section class="hero">
+        <h1>Aapka Haq, <span>Humari AI Takat</span></h1>
+        <p>Apni pareshani aam bhasha mein likhein, NyayaShield AI aapke liye kanooni shikayat (Complaint) taiyar kar dega.</p>
+        <div class="main-action">
+            <button onclick="toggleChat()" style="background:#e63946; color:white; padding:15px 30px; border:none; border-radius:50px; font-size:1.1rem; font-weight:bold; cursor:pointer; box-shadow: 0 4px 15px rgba(230,57,70,0.3);">
+                <i class="fas fa-pen-nib"></i> AI se Complaint Likhein
+            </button>
+        </div>
+    </section>
+
+    <section class="categories">
+        <h2 class="section-title">Legal Power <span>Categories</span></h2>
+        
+        <div class="grid">
+            <a href="detail.html?id=public" target="_blank" class="card-link">
+                <div class="card"><i class="fas fa-bullhorn"></i><h3>Public Recording</h3><p>Video banana aapka right hai.</p><span class="read-more">Kanoon Padhein →</span></div>
+            </a>
+
+            <a href="detail.html?id=couple" target="_blank" class="card-link">
+                <div class="card"><i class="fas fa-heart"></i><h3>Couple Rights</h3><p>Safe ghumne ka adhikaar.</p><span class="read-more">Kanoon Padhein →</span></div>
+            </a>
+
+            <a href="detail.html?id=tenant" target="_blank" class="card-link">
+                <div class="card"><i class="fas fa-key"></i><h3>Tenant Privacy</h3><p>Makan maalik se suraksha.</p><span class="read-more">Kanoon Padhein →</span></div>
+            </a>
+
+            <a href="detail.html?id=delivery" target="_blank" class="card-link">
+                <div class="card"><i class="fas fa-box-open"></i><h3>Delivery Boys</h3><p>Badtameezi ke khilaaf action.</p><span class="read-more">Kanoon Padhein →</span></div>
+            </a>
+
+            <a href="detail.html?id=police_misconduct" target="_blank" class="card-link">
+                <div class="card"><i class="fas fa-gavel"></i><h3>Police Misconduct</h3><p>FIR aur arrest ke rules.</p><span class="read-more">Kanoon Padhein →</span></div>
+            </a>
+
+            <a href="detail.html?id=mens_rights" target="_blank" class="card-link">
+                <div class="card"><i class="fas fa-balance-scale-left"></i><h3>Men's Rights</h3><p>Jhoote cases se bachao.</p><span class="read-more">Kanoon Padhein →</span></div>
+            </a>
+
+            <a href="detail.html?id=zero_fir" target="_blank" class="card-link">
+                <div class="card"><i class="fas fa-file-signature"></i><h3>Zero FIR</h3><p>Kahin bhi FIR darj karein.</p><span class="read-more">Kanoon Padhein →</span></div>
+            </a>
+
+            <a href="detail.html?id=id_fraud" target="_blank" class="card-link">
+                <div class="card"><i class="fas fa-user-shield"></i><h3>Identity Fraud</h3><p>BNS Sec 69 ki jankari.</p><span class="read-more">Kanoon Padhein →</span></div>
+            </a>
+
+            <a href="detail.html?id=car" target="_blank" class="card-link">
+                <div class="card"><i class="fas fa-car"></i><h3>Car Drivers</h3><p>Dashcam aur Chabi rules.</p><span class="read-more">Kanoon Padhein →</span></div>
+            </a>
+
+            <a href="detail.html?id=bikers" target="_blank" class="card-link">
+                <div class="card"><i class="fas fa-motorcycle"></i><h3>Superbikers</h3><p>Helmet camera rules.</p><span class="read-more">Kanoon Padhein →</span></div>
+            </a>
+
+            <a href="detail.html?id=railways" target="_blank" class="card-link">
+                <div class="card"><i class="fas fa-train"></i><h3>Railways</h3><p>Seat aur Pantry adhikaar.</p><span class="read-more">Kanoon Padhein →</span></div>
+            </a>
+
+            <a href="detail.html?id=women" target="_blank" class="card-link">
+                <div class="card"><i class="fas fa-female"></i><h3>Women Safety</h3><p>Arrest aur Search rules.</p><span class="read-more">Kanoon Padhein →</span></div>
+            </a>
+
+            <a href="detail.html?id=consumer" target="_blank" class="card-link">
+                <div class="card"><i class="fas fa-shopping-cart"></i><h3>MRP & Fraud</h3><p>Extra paise na dein.</p><span class="read-more">Kanoon Padhein →</span></div>
+            </a>
+
+            <a href="detail.html?id=phone" target="_blank" class="card-link">
+                <div class="card"><i class="fas fa-mobile-alt"></i><h3>Phone Privacy</h3><p>Privacy ka adhikaar.</p><span class="read-more">Kanoon Padhein →</span></div>
+            </a>
+        </div>
+    </section>
+
+    <div id="ai-chat-wrapper">
+        <div id="chat-launcher" onclick="toggleChat()" style="position:fixed; bottom:20px; right:20px; background:#e63946; color:white; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
+            <i class="fas fa-robot fa-2x"></i>
+        </div>
+
+        <div id="chat-window">
+            <div class="chat-header">
+                <span>NyayaShield AI Assistant</span>
+                <i class="fas fa-times" onclick="toggleChat()" style="cursor:pointer"></i>
+            </div>
+            <div class="chat-body" id="chat-display">
+                <div class="msg bot">
+                    Namaste! Mujhe bataiye kya pareshani hui hai? Main aapke liye ek professional <b>Complaint Draft</b> taiyar kar sakta hoon.
+                </div>
+            </div>
+            <div class="chat-footer">
+                <input type="text" id="chat-input" placeholder="Yahan apni pareshani likhein..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
+                <button onclick="sendChatMessage()" style="border:none; background:none; color:#e63946; cursor:pointer; font-size:20px; margin-left:10px;">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 NyayaShield | Aapka Saboot Aapki Takat</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
