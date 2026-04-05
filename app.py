@@ -19,6 +19,11 @@ GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 def index():
     return render_template("index.html")
 
+# --- NEW DETAILS ROUTE (Ye detail.html ko load karega) ---
+@app.route("/details")
+def details():
+    return render_template("detail.html")
+
 @app.route("/chat", methods=["POST"])
 def chat():
     try:
