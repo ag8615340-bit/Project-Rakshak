@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NyayaShield | AI Legal Assistant</title>
-    <link rel="stylesheet" href="first.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='first.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Chat Window display logic */
+        /* Chat Window display logic (Same as old code) */
         #chat-window {
             display: none;
             flex-direction: column;
@@ -64,59 +64,59 @@
         <h2 class="section-title">Legal Knowledge <span>Hub</span></h2>
         
         <div class="grid">
-            <a href="detail.html?id=public" target="_blank" class="card-link">
+            <a href="/details?id=public" target="_blank" class="card-link">
                 <div class="card"><i class="fas fa-bullhorn"></i><h3>Public Recording</h3><p>Recording in public is your legal right.</p><span class="read-more">Learn More →</span></div>
             </a>
 
-            <a href="detail.html?id=couple" target="_blank" class="card-link">
+            <a href="/details?id=couple" target="_blank" class="card-link">
                 <div class="card"><i class="fas fa-heart"></i><h3>Right to Privacy</h3><p>Protection for couples in public spaces.</p><span class="read-more">Learn More →</span></div>
             </a>
 
-            <a href="detail.html?id=tenant" target="_blank" class="card-link">
+            <a href="/details?id=tenant" target="_blank" class="card-link">
                 <div class="card"><i class="fas fa-key"></i><h3>Tenant Rights</h3><p>Protection against unlawful eviction.</p><span class="read-more">Learn More →</span></div>
             </a>
 
-            <a href="detail.html?id=delivery" target="_blank" class="card-link">
+            <a href="/details?id=delivery" target="_blank" class="card-link">
                 <div class="card"><i class="fas fa-box-open"></i><h3>Workplace Rights</h3><p>Protection for delivery professionals.</p><span class="read-more">Learn More →</span></div>
             </a>
 
-            <a href="detail.html?id=police_misconduct" target="_blank" class="card-link">
+            <a href="/details?id=police_misconduct" target="_blank" class="card-link">
                 <div class="card"><i class="fas fa-gavel"></i><h3>Police Protocols</h3><p>Understanding FIR and arrest laws.</p><span class="read-more">Learn More →</span></div>
             </a>
 
-            <a href="detail.html?id=mens_rights" target="_blank" class="card-link">
+            <a href="/details?id=mens_rights" target="_blank" class="card-link">
                 <div class="card"><i class="fas fa-balance-scale-left"></i><h3>Protection Laws</h3><p>Safeguards against false allegations.</p><span class="read-more">Learn More →</span></div>
             </a>
 
-            <a href="detail.html?id=zero_fir" target="_blank" class="card-link">
+            <a href="/details?id=zero_fir" target="_blank" class="card-link">
                 <div class="card"><i class="fas fa-file-signature"></i><h3>Zero FIR</h3><p>File a complaint at any police station.</p><span class="read-more">Learn More →</span></div>
             </a>
 
-            <a href="detail.html?id=id_fraud" target="_blank" class="card-link">
+            <a href="/details?id=id_fraud" target="_blank" class="card-link">
                 <div class="card"><i class="fas fa-user-shield"></i><h3>Identity Protection</h3><p>Understanding BNS Sec 69 fraud laws.</p><span class="read-more">Learn More →</span></div>
             </a>
 
-            <a href="detail.html?id=car" target="_blank" class="card-link">
+            <a href="/details?id=car" target="_blank" class="card-link">
                 <div class="card"><i class="fas fa-car"></i><h3>Traffic Rights</h3><p>Dashcam and key seizure guidelines.</p><span class="read-more">Learn More →</span></div>
             </a>
 
-            <a href="detail.html?id=bikers" target="_blank" class="card-link">
+            <a href="/details?id=bikers" target="_blank" class="card-link">
                 <div class="card"><i class="fas fa-motorcycle"></i><h3>Biker Rights</h3><p>Helmet camera and RTO regulations.</p><span class="read-more">Learn More →</span></div>
             </a>
 
-            <a href="detail.html?id=railways" target="_blank" class="card-link">
+            <a href="/details?id=railways" target="_blank" class="card-link">
                 <div class="card"><i class="fas fa-train"></i><h3>Railway Ethics</h3><p>Your rights to seats and pantry services.</p><span class="read-more">Learn More →</span></div>
             </a>
 
-            <a href="detail.html?id=women" target="_blank" class="card-link">
+            <a href="/details?id=women" target="_blank" class="card-link">
                 <div class="card"><i class="fas fa-female"></i><h3>Women's Safety</h3><p>Legal protocols for arrest and search.</p><span class="read-more">Learn More →</span></div>
             </a>
 
-            <a href="detail.html?id=consumer" target="_blank" class="card-link">
+            <a href="/details?id=consumer" target="_blank" class="card-link">
                 <div class="card"><i class="fas fa-shopping-cart"></i><h3>Consumer Protection</h3><p>Rights against MRP fraud and scams.</p><span class="read-more">Learn More →</span></div>
             </a>
 
-            <a href="detail.html?id=phone" target="_blank" class="card-link">
+            <a href="/details?id=phone" target="_blank" class="card-link">
                 <div class="card"><i class="fas fa-mobile-alt"></i><h3>Digital Privacy</h3><p>Protecting your personal data rights.</p><span class="read-more">Learn More →</span></div>
             </a>
         </div>
@@ -150,6 +150,6 @@
         <p>&copy; 2026 NyayaShield | Your Rights, Our Priority</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
