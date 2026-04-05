@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template  # <--- render_template add kiya
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import requests
 import os
@@ -14,12 +14,11 @@ CORS(app)
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
-# --- NEW HOME ROUTE (Ye index.html ko load karega) ---
+# --- ROUTES ---
 @app.route("/")
 def index():
     return render_template("index.html")
 
-# --- NEW DETAILS ROUTE (Ye detail.html ko load karega) ---
 @app.route("/details")
 def details():
     return render_template("detail.html")
@@ -33,9 +32,6 @@ def chat():
         if not user_text:
             return jsonify({"error": "Message is required"}), 400
 
-        print(f"📩 Request Received: {user_text}")
-
-        # --- UPDATED PROFESSIONAL ENGLISH PROMPT (Same as yours) ---
         payload = {
             "model": "llama-3.3-70b-versatile",
             "messages": [
@@ -44,14 +40,7 @@ def chat():
                     "content": (
                         "You are NyayaShield AI, a professional Legal & Consumer Complaint Assistant. "
                         "Your primary objective is to draft HIGHLY FORMAL, SOPHISTICATED, and FIRM legal complaints. "
-                        "STRICT OPERATIONAL RULES: "
-                        "1. Use impeccable, professional English only. Avoid slang or informal language. "
-                        "2. The tone must be AUTHORITATIVE and SERIOUS. It should not sound like a polite request but a demand for justice/action. "
-                        "3. Use industry-standard terminology: 'Refund', 'Liability', 'Statutory Rights', 'Breach of Service', 'Non-compliance', 'Legal Recourse'. "
-                        "4. Structure the output clearly: Professional Subject Line, Formal Salutation, Chronological Statement of Facts, Explicit Demand for Resolution, and a Professional Closing. "
-                        "5. Do NOT include specific legal sections (BNS/IPC) unless explicitly asked. Focus on the factual and administrative grievance. "
-                        "6. REMOVE all AI disclaimers (e.g., 'As an AI...', 'I am not a lawyer'). "
-                        "7. Use placeholders like [Your Full Name], [Order/Reference ID], [Date], and [Company Name] for user customization."
+                        "Tone: Authoritative, Serious, Impeccable English. No AI disclaimers."
                     )
                 },
                 {"role": "user", "content": user_text}
@@ -69,16 +58,17 @@ def chat():
         if response.status_code == 200:
             result = response.json()
             bot_reply = result['choices'][0]['message']['content']
-            print("✅ Professional English Draft Generated")
             return jsonify({"reply": bot_reply})
         else:
             return jsonify({"error": f"Groq API error: {response.text}"}), response.status_code
 
     except Exception as e:
-        print(f"🔥 Server Crash: {str(e)}")
         return jsonify({"error": "Internal Server Error"}), 500
 
+# --- 🚀 RENDER DEPLOYMENT SETTINGS ---
 if __name__ == "__main__":
-    # Render uses the PORT environment variable
-    port = int(os.environ.get("PORT", 3000))
+    # 1. Render automatically sets the PORT environment variable. 
+    # Defaulting to 10000 which is Render's standard.
+    port = int(os.environ.get("PORT", 10000))
+    # 2. host="0.0.0.0" is MANDATORY for cloud deployment.
     app.run(host="0.0.0.0", port=port)
