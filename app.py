@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template  # <--- render_template add kiya
 from flask_cors import CORS
 import requests
 import os
@@ -10,9 +10,14 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-# 🔐 Load Groq API Key from .env
+# 🔐 Load Groq API Key from Environment Variables
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+
+# --- NEW HOME ROUTE (Ye index.html ko load karega) ---
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -25,7 +30,7 @@ def chat():
 
         print(f"📩 Request Received: {user_text}")
 
-        # --- UPDATED PROFESSIONAL ENGLISH PROMPT ---
+        # --- UPDATED PROFESSIONAL ENGLISH PROMPT (Same as yours) ---
         payload = {
             "model": "llama-3.3-70b-versatile",
             "messages": [
@@ -46,7 +51,7 @@ def chat():
                 },
                 {"role": "user", "content": user_text}
             ],
-            "temperature": 0.4 # Lowered slightly for more consistent professional output
+            "temperature": 0.4 
         }
 
         headers = {
@@ -69,5 +74,6 @@ def chat():
         return jsonify({"error": "Internal Server Error"}), 500
 
 if __name__ == "__main__":
-    # Using Port 3000 for local dev; Render will override this with its own $PORT
-    app.run(host="0.0.0.0", port=3000, debug=True)
+    # Render uses the PORT environment variable
+    port = int(os.environ.get("PORT", 3000))
+    app.run(host="0.0.0.0", port=port)
