@@ -28,7 +28,7 @@ function toggleChat() {
 }
 
 // ==========================================
-// 3. SEND MESSAGE TO BACKEND (Clean Hinglish)
+// 3. SEND MESSAGE TO BACKEND (Fixed for Render)
 // ==========================================
 async function sendChatMessage() {
     const inputField = document.getElementById('chat-input');
@@ -49,11 +49,17 @@ async function sendChatMessage() {
         chatDisplay.scrollTop = chatDisplay.scrollHeight;
 
         try {
-            const response = await fetch('http://localhost:3000/chat', {
+            // ✅ FIX: 'http://localhost:3000/chat' hata kar sirf '/chat' kiya hai
+            // Isse Render apne aap sahi address pakad lega
+            const response = await fetch('/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: userMessage })
             });
+
+            if (!response.ok) {
+                throw new Error("Server response was not ok");
+            }
 
             const data = await response.json();
 
@@ -61,7 +67,7 @@ async function sendChatMessage() {
             const loader = document.getElementById('temp-loader');
             if(loader) loader.remove();
 
-            // AI Response (Hinglish Clean Draft)
+            // AI Response
             if (data.reply) {
                 addMessageToUI(data.reply, 'bot');
             } else {
@@ -72,7 +78,8 @@ async function sendChatMessage() {
             console.error("Error:", error);
             const loader = document.getElementById('temp-loader');
             if(loader) loader.remove();
-            addMessageToUI("Server offline hai. 'python app.py' check karein.", 'bot');
+            // User-friendly message for Render's cold start
+            addMessageToUI("Connection error! Server jagne mein 30-60 seconds le sakta hai, please thodi der mein dobara try karein.", 'bot');
         }
     }
 }
